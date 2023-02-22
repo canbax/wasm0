@@ -1,0 +1,12 @@
+<button id="mybutton">Run myFunction</button>
+<script async type="text/javascript" src="hello3.js"></script>
+<script>
+  document.getElementById("mybutton").addEventListener("click", () => {
+    const result = Module.ccall(
+      "myFunction", // name of C function
+      null, // return type
+      null, // argument types
+      null // arguments
+    );
+  });
+</script>
