@@ -17,3 +17,5 @@ As we all know C is fast. So let's say I'm sorting an array of integers in JavaS
 - To compile WebAssembly `emcc -o hello3.html hello3.c --shell-file html_template/shell_minimal2.html -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall']"`
 
 - To complie WebAssembly `emcc -o hello5.html fib2.c --shell-file html_template/shell_minimal2.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap`
+
+- It seems with some optimization flags during compilation C can execute faster than JS `emcc -o hello5.html fib2.c --shell-file html_template/shell_minimal2.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
