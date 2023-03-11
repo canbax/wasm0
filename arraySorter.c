@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 
 int compareFn(const void *a, const void *b)
 {
