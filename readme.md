@@ -19,3 +19,7 @@ As we all know C is fast. So let's say I'm sorting an array of integers in JavaS
 - To complie WebAssembly `emcc -o hello5.html fib2.c --shell-file html_template/shell_minimal2.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap`
 
 - It seems with some optimization flags during compilation C can execute faster than JS `emcc -o hello5.html fib2.c --shell-file html_template/shell_minimal2.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
+
+- To call `Module._malloc` from JS `_malloc` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o hello6.html fib3.c --shell-file html_template/simple_compare.html -sEXPORTED_FUNCTIONS=_fib,_malloc -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
+
+- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o hello7.html arraySorter.c --shell-file html_template/simple_compare_array.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
