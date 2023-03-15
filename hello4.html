@@ -1,30 +1,30 @@
-<button id="mybutton">Compare JS vs C on Fibonacci</button>
 <script async type="text/javascript" src="hello4.js"></script>
+<input type="number" id="fibNum" value="35" />
+<button id="mybutton">Compare JS vs C on Fibonacci</button>
 <script>
   document.getElementById("mybutton").addEventListener("click", () => {
-    const fibIndex = 35;
-    const t2 = executeFibonacciOnJS(fibIndex);
+    const fibIndex = Number(document.getElementById("fibNum").value);
+    console.log("fibonnaci number ", fibIndex);
     const t1 = executeFibonacciOnC(fibIndex);
+    const t2 = executeFibonacciOnJS(fibIndex);
     console.log("C time:", t1, "JS time:", t2);
   });
 
   // finds the 'n'th fibonacci number in C using the worst implementation and returns the execution time
   function executeFibonacciOnC(n) {
+    fibC = Module.cwrap("fib", "number", ["number"]);
     const t1 = performance.now();
-    const result = Module.ccall(
-      "fib", // name of C function
-      "number", // return type
-      ["number"], // argument types
-      [n] // arguments
-    );
+    const res = fibC(n);
     const t2 = performance.now();
+    console.log("c result: ", res);
     return t2 - t1;
   }
 
   function executeFibonacciOnJS(n) {
     const t1 = performance.now();
-    fib(n);
+    const res = fib(n);
     const t2 = performance.now();
+    console.log("JS result: ", res);
     return t2 - t1;
   }
 
@@ -33,3 +33,5 @@
     return fib(n - 1) + fib(n - 2);
   }
 </script>
+
+

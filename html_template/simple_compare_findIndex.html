@@ -9,42 +9,44 @@
   document.getElementById("mybutton").addEventListener("click", () => {
     const arr1 = getArray();
     const arr2 = Array.from(arr1);
-    const t1 = arrayOperationsOnC(arr1);
-    const t2 = arrayOperationsOnJS(arr2);
+    const randNum = Math.floor(Math.random() * arr1.length);
+    const t1 = arrayOperationsOnC(arr1, randNum);
+    const t2 = arrayOperationsOnJS(arr2, randNum);
     console.log("C time:", t1, "JS time:", t2);
   });
 
   // finds the 'n'th fibonacci number in C using the worst implementation and returns the execution time
-  function arrayOperationsOnC(n) {
+  function arrayOperationsOnC(n, randNum) {
     const BYTE_SIZE_OF_INT = 4;
 
     const t1 = performance.now();
     const arraySize = n.length;
     const arrayPointer = Module._malloc(arraySize * BYTE_SIZE_OF_INT);
     Module.HEAP32.set(new Int32Array(n), arrayPointer / BYTE_SIZE_OF_INT);
-    const cFunc = Module.cwrap("arraySorter", null, ["number", "number"]);
-    cFunc(arrayPointer, arraySize);
-    const resultArray = Array.from(
-      Module.HEAP32.subarray(
-        arrayPointer / BYTE_SIZE_OF_INT,
-        arrayPointer / BYTE_SIZE_OF_INT + arraySize
-      )
-    );
-    console.log(resultArray);
+    const cFunc = Module.cwrap("findIndex", "number", [
+      "number",
+      "number",
+      "number",
+    ]);
+    const res = cFunc(arrayPointer, arraySize, randNum);
+    console.log(res);
     Module._free(arrayPointer);
     const t2 = performance.now();
     return t2 - t1;
   }
 
-  function arrayOperationsOnJS(n) {
+  function arrayOperationsOnJS(n, randNum) {
     const t1 = performance.now();
-    const res = arraySorter(n);
+    const res = findIndex(n, randNum);
     console.log(res);
     const t2 = performance.now();
     return t2 - t1;
   }
 
-  function arraySorter(arr) {
-    return arr.sort((a, b) => a - b);
+  function findIndex(arr, randNum) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === randNum) return i;
+    }
+    return -1;
   }
 </script>

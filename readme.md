@@ -12,18 +12,22 @@ As we all know C is fast. So let's say I'm sorting an array of integers in JavaS
 
 - To conveniently access emsdk tools from the command line run `source ./emsdk_env.sh` from terminal and use the same terminal window to compile C code. This way C header files will be available
 
-- To not duplicate file names, I created another `shell-minimal2.html` file different from [MDN documentation](https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm#calling_a_custom_function_defined_in_c).
+- Compile WebAssembly that prints 'hello world' to the developer console `emcc hello.c -o hello.html`
 
-- To compile WebAssembly `emcc -o hello3.html hello3.c --shell-file html_template/shell_minimal2.html -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall']"`
+- Compile WebAssembly and use an HTML template `emcc -o hello2.html hello2.c -O3 --shell-file html_template/shell_minimal.html`
 
-- To complie WebAssembly `emcc -o hello5.html fib2.c --shell-file html_template/shell_minimal2.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap`
+- Compile WebAssembly call a C function `emcc -o hello3.html hello3.c --shell-file html_template/shell_minimal2.html -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['ccall']"`
 
-- It seems with some optimization flags during compilation C can execute faster than JS `emcc -o hello5.html fib2.c --shell-file html_template/shell_minimal2.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
+- Compile WebAssembly without optiimizations, call a very badly implemented fibonacci function in both C and JS `emcc -o hello4.html fib.c --shell-file html_template/simple_compare.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap` => JS executes faster.
 
-- To call `Module._malloc` from JS `_malloc` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o hello6.html fib3.c --shell-file html_template/simple_compare.html -sEXPORTED_FUNCTIONS=_fib,_malloc -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
+- Compile WebAssembly with O2 optiimizations, call a very badly implemented fibonacci function in both C and JS `emcc -o hello5.html fib.c --shell-file html_template/simple_compare.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap -O2`=> C executes faster!
 
-- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o hello7.html arraySorter.c --shell-file html_template/simple_compare_array.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
+- Compile WebAssembly with O3 optiimizations, call a very badly implemented fibonacci function in both C and JS `emcc -o hello6.html fib.c --shell-file html_template/simple_compare.html -sEXPORTED_FUNCTIONS=_fib -sEXPORTED_RUNTIME_METHODS=cwrap -O3` => C executes faster!
 
-- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o faster_sorter.html arraySorter2.c --shell-file html_template/simple_compare_array_sort.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
+- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o findIndex.html findIndex.c --shell-file html_template/simple_compare_findIndex.html -sEXPORTED_FUNCTIONS=_findIndex,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
+
+- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o qsort.html arraySorter.c --shell-file html_template/simple_compare_array.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
+
+- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o faster_sorter.html arraySorter2.c --shell-file html_template/simple_compare_array_sort.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => C executes faster!
 
 - To export as an npm module, `emcc arraySorter2.c -o wasm_api.js -sMODULARIZE -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2`

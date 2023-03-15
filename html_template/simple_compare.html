@@ -1,9 +1,9 @@
 {{{ SCRIPT }}}
+<input type="number" id="fibNum" value="35" />
 <button id="mybutton">Compare JS vs C on Fibonacci</button>
 <script>
   document.getElementById("mybutton").addEventListener("click", () => {
-    console.log("malloc", Module._malloc);
-    const fibIndex = 40;
+    const fibIndex = Number(document.getElementById("fibNum").value);
     const t1 = executeFibonacciOnC(fibIndex);
     const t2 = executeFibonacciOnJS(fibIndex);
     console.log("C time:", t1, "JS time:", t2);

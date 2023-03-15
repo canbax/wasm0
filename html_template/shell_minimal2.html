@@ -1,1 +1,17 @@
+<html>
+  <body>
+    <button id="mybutton">Call the C function</button>
+  </body>
+</html>
 {{{ SCRIPT }}}
+<script>
+  document.getElementById("mybutton").addEventListener("click", () => {
+    alert("check console");
+    const result = Module.ccall(
+      "myFunction", // name of C function
+      null, // return type
+      null, // argument types
+      null // arguments
+    );
+  });
+</script>

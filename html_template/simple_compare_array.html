@@ -1,8 +1,9 @@
 {{{ SCRIPT }}}
+<input type="number" id="arrSize" value="1000000" />
 <button id="mybutton">Compare JS vs C on Fibonacci</button>
 <script>
   function getArray() {
-    const l = 3_000_000;
+    const l = Number(document.getElementById("arrSize").value);
     return Array.from({ length: l }, () => Math.floor(Math.random() * l));
   }
   document.getElementById("mybutton").addEventListener("click", () => {
@@ -13,16 +14,21 @@
     console.log("C time:", t1, "JS time:", t2);
   });
 
-  // finds the 'n'th fibonacci number in C using the worst implementation and returns the execution time
   function arrayOperationsOnC(n) {
     const BYTE_SIZE_OF_INT = 4;
-
+    const t1 = performance.now();
     const arraySize = n.length;
     const arrayPointer = Module._malloc(arraySize * BYTE_SIZE_OF_INT);
     Module.HEAP32.set(new Int32Array(n), arrayPointer / BYTE_SIZE_OF_INT);
     const cFunc = Module.cwrap("arraySorter", null, ["number", "number"]);
-    const t1 = performance.now();
     cFunc(arrayPointer, arraySize);
+    const resultArray = Array.from(
+      Module.HEAP32.subarray(
+        arrayPointer / BYTE_SIZE_OF_INT,
+        arrayPointer / BYTE_SIZE_OF_INT + arraySize
+      )
+    );
+    console.log(resultArray);
     Module._free(arrayPointer);
     const t2 = performance.now();
     return t2 - t1;
@@ -31,6 +37,7 @@
   function arrayOperationsOnJS(n) {
     const t1 = performance.now();
     const res = arraySorter(n);
+    console.log(res);
     const t2 = performance.now();
     return t2 - t1;
   }
