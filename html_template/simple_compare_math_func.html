@@ -1,0 +1,70 @@
+{{{ SCRIPT }}}
+<input type="number" id="arrSize" value="1000000" />
+
+<fieldset>
+  <legend>Select a math function:</legend>
+  <div>
+    <input type="radio" id="huey" name="drone" value="huey" checked />
+    <label for="huey">Huey</label>
+  </div>
+  <div>
+    <input type="radio" id="dewey" name="drone" value="dewey" />
+    <label for="dewey">Dewey</label>
+  </div>
+  <div>
+    <input type="radio" id="louie" name="drone" value="louie" />
+    <label for="louie">Louie</label>
+  </div>
+</fieldset>
+
+<button id="mybutton">Compare JS vs C on Fibonacci</button>
+<script>
+  function getArray() {
+    const l = Number(document.getElementById("arrSize").value);
+    return Array.from({ length: l }, () => Math.floor(Math.random() * l));
+  }
+  document.getElementById("mybutton").addEventListener("click", () => {
+    const arr1 = getArray();
+    const arr2 = Array.from(arr1);
+    const randNum = Math.floor(Math.random() * arr1.length);
+    const t1 = arrayOperationsOnC(arr1, randNum);
+    const t2 = arrayOperationsOnJS(arr2, randNum);
+    console.log("C time:", t1, "JS time:", t2);
+  });
+
+  // finds the 'n'th fibonacci number in C using the worst implementation and returns the execution time
+  function arrayOperationsOnC(n, randNum) {
+    const BYTE_SIZE_OF_INT = 4;
+
+    const t1 = performance.now();
+    const arraySize = n.length;
+    const arrayPointer = Module._malloc(arraySize * BYTE_SIZE_OF_INT);
+    Module.HEAP32.set(new Int32Array(n), arrayPointer / BYTE_SIZE_OF_INT);
+    const cFunc = Module.cwrap("mathMax", "number", [
+      "number",
+      "number",
+      "number",
+    ]);
+    const res = cFunc(arrayPointer, arraySize, randNum);
+    console.log(res);
+    Module._free(arrayPointer);
+    const t2 = performance.now();
+    return t2 - t1;
+  }
+
+  function arrayOperationsOnJS(n, randNum) {
+    const t1 = performance.now();
+    const res = findIndex(n, randNum);
+    console.log(res);
+    const t2 = performance.now();
+    return t2 - t1;
+  }
+
+  function findIndex(arr, randNum) {
+    let m = -1;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] > m) m = arr[i];
+    }
+    return m;
+  }
+</script>
