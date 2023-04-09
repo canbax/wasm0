@@ -6,6 +6,9 @@ This is just a trial to see if we can call a C function from JavaScript of a bro
 
 As we all know C is fast. So let's say I'm sorting an array of integers in JavaScript in browser. If I create a C function for sorting and use it, can it execute faster?
 
+## Introduction slides
+https://docs.google.com/presentation/u/1/d/19jMpR6ZOJ7TQfjJdOHFjeeeZKxQzyGhN9YFLuEfP8KI/
+
 ## Instructions
 
 - Followed instructions at [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm) and https://emscripten.org/docs/getting_started/downloads.html Basically I used emscripten to generate WASM code from C code and then open it in the browser. You need a [basic HTTP server](https://github.com/ritwickdey/vscode-live-server-plus-plus). Opening raw HTML in browser won't work.
