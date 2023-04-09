@@ -33,6 +33,6 @@ https://docs.google.com/presentation/u/1/d/19jMpR6ZOJ7TQfjJdOHFjeeeZKxQzyGhN9YFL
 
 - To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o qsort.html arraySorter.c --shell-file html_template/simple_compare_array.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
 
-- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o faster_sorter.html arraySorter2.c --shell-file html_template/simple_compare_array_sort.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => C executes faster!
+- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o faster_sorter.html arraySorter2.c --shell-file html_template/simple_compare_array.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => C executes faster!
 
 - To export as an npm module, `emcc arraySorter2.c -o wasm_api.js -sMODULARIZE -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2`
