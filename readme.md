@@ -26,7 +26,7 @@ As we all know C is fast. So let's say I'm sorting an array of integers in JavaS
 
 - To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o findIndex.html findIndex.c --shell-file html_template/simple_compare_findIndex.html -sEXPORTED_FUNCTIONS=_findIndex,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
 
-- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o mathFunctions.html mathFunctions.c --shell-file html_template/simple_compare_math_func.html -sEXPORTED_FUNCTIONS=_mathMax,_mathMin,_mathAvg,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
+- To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o mathMax.html mathMax.c --shell-file html_template/simple_compare_math_max.html -sEXPORTED_FUNCTIONS=_mathMax,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
 
 - To call `Module._malloc` and `Module._free` from JS `_malloc` and `_free` should be exported inside flag `sEXPORTED_FUNCTIONS` like `emcc -o qsort.html arraySorter.c --shell-file html_template/simple_compare_array.html -sEXPORTED_FUNCTIONS=_arraySorter,_malloc,_free -sEXPORTED_RUNTIME_METHODS=cwrap -O2` => JS executes faster.
 
